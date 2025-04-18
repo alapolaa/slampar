@@ -6,7 +6,7 @@ include 'koneksi.php';
 $id = $_SESSION['id_pengguna'];
 
 // Ambil data pengguna
-$query = "SELECT nama, nik, tanggal_lahir, alamat, no_hp, email FROM pengguna WHERE id = ?";
+$query = "SELECT nama, nik, tanggal_lahir, alamat, no_hp, email FROM warga WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $no_hp = $_POST['no_hp'];
     $email = $_POST['email'];
 
-    $update_query = "UPDATE pengguna SET nama=?, tanggal_lahir=?, alamat=?, no_hp=?, email=? WHERE id=?";
+    $update_query = "UPDATE warga SET nama=?, tanggal_lahir=?, alamat=?, no_hp=?, email=? WHERE id=?";
     $update_stmt = $conn->prepare($update_query);
     $update_stmt->bind_param("sssssi", $nama, $tanggal_lahir, $alamat, $no_hp, $email, $id);
 

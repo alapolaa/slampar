@@ -4,7 +4,7 @@ include('koneksi.php');
 
 
 $id = $_SESSION['id_pengguna'];
-$query = "SELECT nama, nik, tanggal_lahir, alamat, no_hp, email FROM pengguna WHERE id = ?";
+$query = "SELECT nama, nik, tanggal_lahir, alamat, no_hp, email FROM warga WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -17,7 +17,7 @@ $user = $result->fetch_assoc();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Pengguna</title>
+    <title>Profil Warga</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .profile-container {
@@ -62,7 +62,7 @@ $user = $result->fetch_assoc();
 
                     <div class="btn-group">
                         <a href="edit_profile.php" class="btn btn-primary">Edit</a>
-                        <a href="slampang.php" class="btn btn-secondary">Logout</a>
+                        <a href="slampar.php" class="btn btn-secondary">Logout</a>
                     </div>
                 </div>
             </div>

@@ -10,13 +10,13 @@ $search = isset($_GET['search']) ? $_GET['search'] : "";
 $searchQuery = $search ? "WHERE nama LIKE '%$search%' OR nik LIKE '%$search%'" : "";
 
 
-$sql_count = "SELECT COUNT(*) as total FROM pengguna $searchQuery";
+$sql_count = "SELECT COUNT(*) as total FROM warga $searchQuery";
 $result_count = mysqli_query($conn, $sql_count);
 $total = mysqli_fetch_assoc($result_count)['total'];
 $totalPages = ceil($total / $limit);
 
 
-$sql = "SELECT * FROM pengguna $searchQuery LIMIT $start, $limit";
+$sql = "SELECT * FROM warga $searchQuery LIMIT $start, $limit";
 $result = mysqli_query($conn, $sql);
 ?>
 

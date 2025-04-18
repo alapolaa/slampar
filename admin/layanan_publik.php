@@ -16,11 +16,11 @@ if ($cari != '') {
     $where = "WHERE p.nama LIKE '%$cari%' OR ps.jenis_surat LIKE '%$cari%'";
 }
 
-$data = mysqli_query($conn, "SELECT ps.*, p.nama FROM pengajuan_surat ps JOIN pengguna p ON ps.id_pengguna = p.id $where");
+$data = mysqli_query($conn, "SELECT ps.*, p.nama FROM pengajuan_surat ps JOIN warga p ON ps.id_pengguna = p.id $where");
 $jumlah_data = mysqli_num_rows($data);
 $total_halaman = ceil($jumlah_data / $batas);
 
-$query = "SELECT ps.*, p.nama FROM pengajuan_surat ps JOIN pengguna p ON ps.id_pengguna = p.id $where ORDER BY ps.tanggal_pengajuan DESC LIMIT $halaman_awal, $batas";
+$query = "SELECT ps.*, p.nama FROM pengajuan_surat ps JOIN warga p ON ps.id_pengguna = p.id $where ORDER BY ps.tanggal_pengajuan DESC LIMIT $halaman_awal, $batas";
 $result = $conn->query($query);
 
 $total_masuk = $conn->query("SELECT COUNT(*) as total FROM pengajuan_surat")->fetch_assoc()['total'];

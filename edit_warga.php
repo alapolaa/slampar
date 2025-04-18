@@ -3,8 +3,8 @@ include('koneksi.php');
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0; // Pastikan ID adalah angka
 
-// Ambil data pengguna berdasarkan ID
-$sql = "SELECT * FROM pengguna WHERE id = ?";
+// Ambil data warga berdasarkan ID
+$sql = "SELECT * FROM warga WHERE id = ?";
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, "i", $id);
 mysqli_stmt_execute($stmt);
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
 
     // Update data ke database
-    $sql = "UPDATE pengguna SET nama=?, nik=?, tanggal_lahir=?, alamat=?, no_hp=?, email=? WHERE id=?";
+    $sql = "UPDATE warga SET nama=?, nik=?, tanggal_lahir=?, alamat=?, no_hp=?, email=? WHERE id=?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "ssssssi", $nama, $nik, $tanggal_lahir, $alamat, $no_hp, $email, $id);
 
@@ -44,13 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
     <meta charset="UTF-8">
-    <title>Edit Pengguna</title>
+    <title>Edit warga</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="container mt-5">
-        <h2 class="text-center">Edit Pengguna</h2>
+        <h2 class="text-center">Edit warga</h2>
         <form action="" method="post">
             <div class="mb-3">
                 <label>Nama:</label>

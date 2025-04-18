@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tanggal_lahir = date('Y-m-d', strtotime($tanggal_lahir));
 
 
-        $query = "SELECT * FROM pengguna WHERE nik='$nik' AND tanggal_lahir='$tanggal_lahir'";
+        $query = "SELECT * FROM warga WHERE nik='$nik' AND tanggal_lahir='$tanggal_lahir'";
         $result = $conn->query($query);
 
         if ($result->num_rows > 0) {
@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-success">Login</button>
-                <a href="slampang.php" class="btn btn-secondary">Kembali</a>
+                <a href="slampar.php" class="btn btn-secondary">Kembali</a>
             </div>
         </form>
     </div>

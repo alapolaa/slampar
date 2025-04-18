@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
-    $cek_nik = "SELECT nik FROM pengguna WHERE nik = '$nik'";
+    $cek_nik = "SELECT nik FROM warga WHERE nik = '$nik'";
     $result_nik = mysqli_query($conn, $cek_nik);
     if (mysqli_num_rows($result_nik) > 0) {
         echo "<script>alert('NIK yang Anda masukkan sudah terdaftar.'); window.history.back();</script>";
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     if (!empty($email)) {
-        $cek_email = "SELECT email FROM pengguna WHERE email = '$email'";
+        $cek_email = "SELECT email FROM warga WHERE email = '$email'";
         $result_email = mysqli_query($conn, $cek_email);
         if (mysqli_num_rows($result_email) > 0) {
             echo "<script>alert('Email yang Anda masukkan sudah terdaftar.'); window.history.back();</script>";
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    $sql = "INSERT INTO pengguna (nama, nik, tanggal_lahir, alamat, no_hp, email, password) VALUES ('$nama', '$nik', '$tanggal_lahir', '$alamat', '$no_hp', '$email', '$password')";
+    $sql = "INSERT INTO warga (nama, nik, tanggal_lahir, alamat, no_hp, email, password) VALUES ('$nama', '$nik', '$tanggal_lahir', '$alamat', '$no_hp', '$email', '$password')";
 
     if (mysqli_query($conn, $sql)) {
         header("Location: index_admin.php?page=warga");

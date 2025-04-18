@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 02, 2025 at 07:03 PM
+-- Generation Time: Apr 18, 2025 at 08:40 AM
 -- Server version: 5.7.24
 -- PHP Version: 8.3.1
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `desa`
+-- Database: `a`
 --
 
 -- --------------------------------------------------------
@@ -30,15 +30,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin` (
   `id_admin` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `nama` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`id_admin`, `email`, `password`) VALUES
-(1, 'a@gmail.com', 'a');
 
 -- --------------------------------------------------------
 
@@ -76,8 +70,8 @@ CREATE TABLE `berita` (
 --
 
 CREATE TABLE `detail_surat` (
-  `id` int(11) NOT NULL,
-  `id_pengajuan` int(11) NOT NULL,
+  `id_detail_surat` int(11) NOT NULL,
+  `id_pengajuan_surat` int(11) NOT NULL,
   `nama_lengkap` varchar(100) NOT NULL,
   `tempat_lahir` varchar(100) NOT NULL,
   `tanggal_lahir` date NOT NULL,
@@ -103,6 +97,17 @@ CREATE TABLE `detail_surat` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dusun`
+--
+
+CREATE TABLE `dusun` (
+  `id_dusun` int(11) NOT NULL,
+  `nama_dusun` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `galery`
 --
 
@@ -110,6 +115,17 @@ CREATE TABLE `galery` (
   `id_galery` int(11) NOT NULL,
   `gambar` varchar(255) NOT NULL,
   `id_admin` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jenis_surat`
+--
+
+CREATE TABLE `jenis_surat` (
+  `id_jenis` int(11) NOT NULL,
+  `nama_jenis` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -129,13 +145,6 @@ CREATE TABLE `kegiatan` (
   `id_admin` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `kegiatan`
---
-
-INSERT INTO `kegiatan` (`id_kegiatan`, `nama_kegiatan`, `keterangan`, `tanggal_mulai`, `tanggal_selesai`, `lokasi`, `gambar`, `id_admin`) VALUES
-(2, 'Belajar Flutter', 'dfdfd', '2025-03-02', '2025-03-02', 'dfdf', 'talas.jpg', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -143,16 +152,14 @@ INSERT INTO `kegiatan` (`id_kegiatan`, `nama_kegiatan`, `keterangan`, `tanggal_m
 --
 
 CREATE TABLE `kontak` (
-  `id_kontak` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
-  `email` VARCHAR(100) NOT NULL,
-  `subjeck` VARCHAR(255) NOT NULL,
-  `message` TEXT NOT NULL,
-  `status` ENUM('baru','dibaca') DEFAULT 'baru',
-  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_kontak`)
+  `id_kontak` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `subjeck` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `status` enum('baru','dibaca') DEFAULT 'baru',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 -- --------------------------------------------------------
 
@@ -161,7 +168,7 @@ CREATE TABLE `kontak` (
 --
 
 CREATE TABLE `misi` (
-  `id` int(11) NOT NULL,
+  `id_misi` int(11) NOT NULL,
   `isi` text NOT NULL,
   `id_admin` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -173,30 +180,13 @@ CREATE TABLE `misi` (
 --
 
 CREATE TABLE `pengajuan_surat` (
-  `id` int(11) NOT NULL,
-  `id_pengguna` int(11) NOT NULL,
-  `jenis_surat` enum('Domisili','Tidak Mampu','Usaha','Belum Menikah','Tanah') NOT NULL,
+  `id_pengajuan_surat` int(11) NOT NULL,
+  `id_warga` int(11) NOT NULL,
+  `id_jenis` int(11) NOT NULL,
   `status` enum('Menunggu Verifikasi','Diproses','Siap Diambil','Ditolak') DEFAULT 'Menunggu Verifikasi',
   `alasan_penolakan` text,
   `tanggal_pengajuan` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `tanggal_selesai` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pengguna`
---
-
-CREATE TABLE `pengguna` (
-  `id` int(11) NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `nik` varchar(20) NOT NULL,
-  `tanggal_lahir` date NOT NULL,
-  `alamat` text NOT NULL,
-  `no_hp` varchar(15) NOT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -220,7 +210,7 @@ CREATE TABLE `pengumuman` (
 --
 
 CREATE TABLE `potensi_desa` (
-  `id` int(11) NOT NULL,
+  `id_potensi_desa` int(11) NOT NULL,
   `gambar` varchar(255) NOT NULL,
   `keterangan` text,
   `id_admin` int(11) NOT NULL
@@ -273,9 +263,28 @@ CREATE TABLE `umkm_desa` (
 --
 
 CREATE TABLE `visi` (
-  `id` int(11) NOT NULL,
+  `id_visi` int(11) NOT NULL,
   `isi` text NOT NULL,
   `id_admin` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `warga`
+--
+
+CREATE TABLE `warga` (
+  `id_warga` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `nik` varchar(20) NOT NULL,
+  `tanggal_lahir` date NOT NULL,
+  `no_hp` varchar(15) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `id_dusun` int(11) DEFAULT NULL,
+  `desa` varchar(100) NOT NULL,
+  `kecamatan` varchar(100) NOT NULL,
+  `kabupaten` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -286,8 +295,7 @@ CREATE TABLE `visi` (
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id_admin`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id_admin`);
 
 --
 -- Indexes for table `banner`
@@ -307,8 +315,14 @@ ALTER TABLE `berita`
 -- Indexes for table `detail_surat`
 --
 ALTER TABLE `detail_surat`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_pengajuan` (`id_pengajuan`);
+  ADD PRIMARY KEY (`id_detail_surat`),
+  ADD KEY `id_pengajuan_surat` (`id_pengajuan_surat`);
+
+--
+-- Indexes for table `dusun`
+--
+ALTER TABLE `dusun`
+  ADD PRIMARY KEY (`id_dusun`);
 
 --
 -- Indexes for table `galery`
@@ -316,6 +330,12 @@ ALTER TABLE `detail_surat`
 ALTER TABLE `galery`
   ADD PRIMARY KEY (`id_galery`),
   ADD KEY `id_admin` (`id_admin`);
+
+--
+-- Indexes for table `jenis_surat`
+--
+ALTER TABLE `jenis_surat`
+  ADD PRIMARY KEY (`id_jenis`);
 
 --
 -- Indexes for table `kegiatan`
@@ -328,30 +348,22 @@ ALTER TABLE `kegiatan`
 -- Indexes for table `kontak`
 --
 ALTER TABLE `kontak`
-  ADD PRIMARY KEY (`id_kontak`),
-  ADD KEY `id_admin` (`id_admin`);
+  ADD PRIMARY KEY (`id_kontak`);
 
 --
 -- Indexes for table `misi`
 --
 ALTER TABLE `misi`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id_misi`),
   ADD KEY `id_admin` (`id_admin`);
 
 --
 -- Indexes for table `pengajuan_surat`
 --
 ALTER TABLE `pengajuan_surat`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_pengguna` (`id_pengguna`);
-
---
--- Indexes for table `pengguna`
---
-ALTER TABLE `pengguna`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `nik` (`nik`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id_pengajuan_surat`),
+  ADD KEY `id_warga` (`id_warga`),
+  ADD KEY `id_jenis` (`id_jenis`);
 
 --
 -- Indexes for table `pengumuman`
@@ -364,7 +376,7 @@ ALTER TABLE `pengumuman`
 -- Indexes for table `potensi_desa`
 --
 ALTER TABLE `potensi_desa`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id_potensi_desa`),
   ADD KEY `id_admin` (`id_admin`);
 
 --
@@ -392,8 +404,15 @@ ALTER TABLE `umkm_desa`
 -- Indexes for table `visi`
 --
 ALTER TABLE `visi`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id_visi`),
   ADD KEY `id_admin` (`id_admin`);
+
+--
+-- Indexes for table `warga`
+--
+ALTER TABLE `warga`
+  ADD PRIMARY KEY (`id_warga`),
+  ADD KEY `id_dusun` (`id_dusun`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -403,7 +422,7 @@ ALTER TABLE `visi`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `banner`
@@ -421,7 +440,13 @@ ALTER TABLE `berita`
 -- AUTO_INCREMENT for table `detail_surat`
 --
 ALTER TABLE `detail_surat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detail_surat` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `dusun`
+--
+ALTER TABLE `dusun`
+  MODIFY `id_dusun` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `galery`
@@ -430,10 +455,16 @@ ALTER TABLE `galery`
   MODIFY `id_galery` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `jenis_surat`
+--
+ALTER TABLE `jenis_surat`
+  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
-  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `kontak`
@@ -445,19 +476,13 @@ ALTER TABLE `kontak`
 -- AUTO_INCREMENT for table `misi`
 --
 ALTER TABLE `misi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_misi` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pengajuan_surat`
 --
 ALTER TABLE `pengajuan_surat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `pengguna`
---
-ALTER TABLE `pengguna`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pengajuan_surat` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pengumuman`
@@ -469,7 +494,7 @@ ALTER TABLE `pengumuman`
 -- AUTO_INCREMENT for table `potensi_desa`
 --
 ALTER TABLE `potensi_desa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_potensi_desa` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `sejarah`
@@ -493,7 +518,13 @@ ALTER TABLE `umkm_desa`
 -- AUTO_INCREMENT for table `visi`
 --
 ALTER TABLE `visi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_visi` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `warga`
+--
+ALTER TABLE `warga`
+  MODIFY `id_warga` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -503,85 +534,86 @@ ALTER TABLE `visi`
 -- Constraints for table `banner`
 --
 ALTER TABLE `banner`
-  ADD CONSTRAINT `banner_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE CASCADE;
+  ADD CONSTRAINT `banner_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
 
 --
 -- Constraints for table `berita`
 --
 ALTER TABLE `berita`
-  ADD CONSTRAINT `berita_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE CASCADE;
+  ADD CONSTRAINT `berita_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
 
 --
 -- Constraints for table `detail_surat`
 --
 ALTER TABLE `detail_surat`
-  ADD CONSTRAINT `detail_surat_ibfk_1` FOREIGN KEY (`id_pengajuan`) REFERENCES `pengajuan_surat` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `detail_surat_ibfk_1` FOREIGN KEY (`id_pengajuan_surat`) REFERENCES `pengajuan_surat` (`id_pengajuan_surat`);
 
 --
 -- Constraints for table `galery`
 --
 ALTER TABLE `galery`
-  ADD CONSTRAINT `galery_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE CASCADE;
+  ADD CONSTRAINT `galery_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
 
 --
 -- Constraints for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
-  ADD CONSTRAINT `kegiatan_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE CASCADE;
-
---
--- Constraints for table `kontak`
---
-ALTER TABLE `kontak`
-  ADD CONSTRAINT `kontak_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE CASCADE;
+  ADD CONSTRAINT `kegiatan_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
 
 --
 -- Constraints for table `misi`
 --
 ALTER TABLE `misi`
-  ADD CONSTRAINT `misi_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE CASCADE;
+  ADD CONSTRAINT `misi_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
 
 --
 -- Constraints for table `pengajuan_surat`
 --
 ALTER TABLE `pengajuan_surat`
-  ADD CONSTRAINT `pengajuan_surat_ibfk_1` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `pengajuan_surat_ibfk_1` FOREIGN KEY (`id_warga`) REFERENCES `warga` (`id_warga`),
+  ADD CONSTRAINT `pengajuan_surat_ibfk_2` FOREIGN KEY (`id_jenis`) REFERENCES `jenis_surat` (`id_jenis`);
 
 --
 -- Constraints for table `pengumuman`
 --
 ALTER TABLE `pengumuman`
-  ADD CONSTRAINT `pengumuman_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE CASCADE;
+  ADD CONSTRAINT `pengumuman_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
 
 --
 -- Constraints for table `potensi_desa`
 --
 ALTER TABLE `potensi_desa`
-  ADD CONSTRAINT `potensi_desa_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE CASCADE;
+  ADD CONSTRAINT `potensi_desa_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
 
 --
 -- Constraints for table `sejarah`
 --
 ALTER TABLE `sejarah`
-  ADD CONSTRAINT `sejarah_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE CASCADE;
+  ADD CONSTRAINT `sejarah_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
 
 --
 -- Constraints for table `struktur`
 --
 ALTER TABLE `struktur`
-  ADD CONSTRAINT `struktur_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE CASCADE;
+  ADD CONSTRAINT `struktur_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
 
 --
 -- Constraints for table `umkm_desa`
 --
 ALTER TABLE `umkm_desa`
-  ADD CONSTRAINT `umkm_desa_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE CASCADE;
+  ADD CONSTRAINT `umkm_desa_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
 
 --
 -- Constraints for table `visi`
 --
 ALTER TABLE `visi`
-  ADD CONSTRAINT `visi_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE CASCADE;
+  ADD CONSTRAINT `visi_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
+
+--
+-- Constraints for table `warga`
+--
+ALTER TABLE `warga`
+  ADD CONSTRAINT `warga_ibfk_1` FOREIGN KEY (`id_dusun`) REFERENCES `dusun` (`id_dusun`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

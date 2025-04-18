@@ -3,7 +3,7 @@ include('koneksi.php');
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $sql = "SELECT ds.*, ps.jenis_surat, p.nama, ps.status FROM detail_surat ds JOIN pengajuan_surat ps ON ds.id_pengajuan = ps.id JOIN pengguna p ON ps.id_pengguna = p.id WHERE ds.id_pengajuan = $id";
+    $sql = "SELECT ds.*, ps.jenis_surat, p.nama, ps.status FROM detail_surat ds JOIN pengajuan_surat ps ON ds.id_pengajuan = ps.id JOIN warga p ON ps.id_pengguna = p.id WHERE ds.id_pengajuan = $id";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {

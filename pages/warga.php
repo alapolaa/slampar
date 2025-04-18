@@ -9,7 +9,7 @@ if (!isset($_SESSION['id_pengguna'])) {
 
 $id_pengguna = $_SESSION['id_pengguna'];
 
-$query_user = "SELECT * FROM pengguna WHERE id = '$id_pengguna'";
+$query_user = "SELECT * FROM warga WHERE id = '$id_pengguna'";
 $result_user = $conn->query($query_user);
 $user = $result_user->fetch_assoc();
 
